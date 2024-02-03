@@ -24,15 +24,20 @@ $_POST["personCount"]);
 
 
 
-if ($stmt->execute()) {
+try {
+    if ($stmt->execute()) {
+        echo "Twoja rezerwacja została utworzona";
+header("Location: res-created.html");
+exit;
 
-    echo"NIce";
-    
-} else {
-    
-    if ($mysqli->errno === 1062) {
-        die("email already taken");
     } else {
-        die($mysqli->error . " " . $mysqli->errno);
+        echo "Nie udało się utworzyć rezerwacji";
+    }
+} catch (mysqli_sql_exception $e) {
+    if ($e->getCode() === 1062) {
+        die("Adres email już istnieje. Proszę podać inny adres email.");
+    } else {
+        die("Wystąpił błąd podczas wykonywania zapytania: " . $e->getMessage());
     }
 }
+?>
