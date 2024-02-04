@@ -1,5 +1,5 @@
 <?php
-
+$is_invalid=false;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
@@ -13,16 +13,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     $user = $result->fetch_assoc();
 
-    if ($user && $user['client'] === $_POST['name']) {
-        // Imię zgadza się, wykonaj odpowiednie działania
-        // Na przykład, dodaj kod tutaj...
-        echo "Imię zgadza się z danymi w bazie danych.";
+
+    if (!$user) {
+        $is_invalid = true; // Jeśli użytkownik nie istnieje, ustaw flagę is_invalid na true
     } else {
-        // Imię nie zgadza się lub użytkownik nie istnieje
-        echo "Imię nie zgadza się z danymi w bazie danych lub użytkownik o podanym adresie email nie istnieje.";
+        if ($user['client'] === $_POST['name']) {
+            // Imię zgadza się, wykonaj odpowiednie działania
+            // Na przykład, dodaj kod tutaj...
+            session_start();
+            $_SESSION["user_id"] = $user["id"];
+            header("Location: index.php");
+            exit;
+        } else {
+            $is_invalid = true; // Jeśli imię nie zgadza się, ustaw flagę is_invalid na true
+        }
     }
-    
-    exit; // Zakończenie skryptu
 }
 ?>
 
@@ -38,21 +43,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
     <h1>Login</h1>
 
-    <form method="POST"">
-        <div>
-            <label for="email"></label>
-            <input type="email" name="email" id="email">
-        </div>
-        <div>
-            <label for="name"></label>
-            <input type="name" name="name" id="name">
-        </div>
+    <?php if ($is_invalid): ?>
+        <em>Invalid login</em>
+    <?php endif; ?>
+        <form method="POST">
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email"
+                value ="<?= htmlspecialchars($_POST["email"] ?? "" )?>">
+            </div>
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name">
+            </div>
 
-        <button>Baton</button>
+            <button type="submit">Submit</button>
 
-    </form>
-
-
+        </form>
 </body>
 
 </html>
