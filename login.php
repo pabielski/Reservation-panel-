@@ -13,19 +13,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     $user = $result->fetch_assoc();
 
-
+    if ($_POST['name'] === 'Administrator' && $_POST['email'] === 'admin@hotel.pl') {
+        echo'';
+        header("Location: panel_administratora.php");
+        exit; } else {
     if (!$user) {
         $is_invalid = true; // Jeśli użytkownik nie istnieje, ustaw flagę is_invalid na true
-    } else {
-        if ($user['client'] === $_POST['name']) {
-            // Imię zgadza się, wykonaj odpowiednie działania
-            // Na przykład, dodaj kod tutaj...
-            session_start();
-            $_SESSION["user_id"] = $user["id"];
-            header("Location: index.php");
-            exit;
-        } else {
-            $is_invalid = true; // Jeśli imię nie zgadza się, ustaw flagę is_invalid na true
+    }  else {
+            if ($user['client'] === $_POST['name']) {
+                // Imię zgadza się, wykonaj odpowiednie działania
+                // Na przykład, dodaj kod tutaj...
+                session_start();
+                $_SESSION["user_id"] = $user["id"];
+                header("Location: index.php");
+                exit;
+            } else {
+                $is_invalid = true; // Jeśli imię nie zgadza się, ustaw flagę is_invalid na true
+            }
         }
     }
 }
