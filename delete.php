@@ -7,6 +7,6 @@ if(isset($_GET['deleteid'])){
     $sql="delete from clients where id=$id";
     $result = $mysqli->query($sql);
     if($result){
-        echo"Usunięto";
+        header("Location: panel_administratora.php");
     }
 }
