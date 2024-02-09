@@ -36,7 +36,7 @@
                 <input type="number" name="personCount" id="personCount" placeholder="1" />
             </div>
             <div class="formularz">
-                <label for="room">Wybierz pokój:</label>
+                <label for="room"></label>
                 <select name="room" id="room">
                     <?php
                     $mysqli = require __DIR__ . "/database.php";

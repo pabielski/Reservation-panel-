@@ -70,3 +70,18 @@ button.del{
 button.del:hover{ 
     background:  #cc7777; 
 }
+#filter {
+    padding: 10px;
+    border: 1px solid #4682B4;
+    border-radius: 4px;
+    background-color: #0a0f19;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    outline: none;
+}
+
+#filter option {
+    background-color: #0a0f19;
+    color: #fff;
+}

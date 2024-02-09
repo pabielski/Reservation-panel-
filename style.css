@@ -91,6 +91,29 @@ section#dane.visible{
 input[type="date"]::placeholder {
     color: #999; /* Kolor dla domyślnego tekstu */
 }
+select[name="room"] {
+    background: transparent;
+    outline: none;
+    padding: 12px;
+    color: white;
+    flex: 1;
+    border: none;
+    appearance: none; /* Usunięcie domyślnego wyglądu rozwijanej listy */
+    -webkit-appearance: none; /* Usunięcie domyślnego wyglądu rozwijanej listy w przeglądarkach opartych na silniku WebKit */
+    -moz-appearance: none; /* Usunięcie domyślnego wyglądu rozwijanej listy w przeglądarkach opartych na silniku Gecko */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23ffffff'%3E%3Cpath d='M5 7l5 5 5-5z'/%3E%3C/svg%3E"); /* Dodanie ikony strzałki do rozwijanej listy */
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    cursor: pointer;
+}
 
-
-
+/* Stylowanie rozwijanej listy po najechaniu myszką */
+select[name="room"]:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+select[name="room"] option {
+    background-color: #19233b; /* Kolor tła opcji */
+    color: #fff; /* Kolor tekstu opcji */
+    margin-bottom: 20px;
+}

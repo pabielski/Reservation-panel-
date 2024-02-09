@@ -53,8 +53,8 @@ if(isset($_POST['submit'])){
     <i class="fa-solid fa-plus plusicon"></i>
 </header>
 <main>
-    <section id="dodajimie">
-        <form method="post">
+<section id="dodajimie">
+        <form action="process-signup.php" method="post">
             <div class="formularz">
                 <label for="name"></label>
                 <input type="text" id="name" name="name" placeholder="Jan Przykładowy" />
@@ -71,8 +71,23 @@ if(isset($_POST['submit'])){
                 <label for="personCount"></label>
                 <input type="number" name="personCount" id="personCount" placeholder="1" />
             </div>
-            <button type="submit" name="submit">Rezerwuję</button>
-
+            <div class="formularz">
+                <label for="room"></label>
+                <select name="room" id="room">
+                    <?php
+                    $mysqli = require __DIR__ . "/database.php";
+                    $sql = "SELECT id, type FROM rooms";
+                    $result = $mysqli->query($sql);
+            
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value=\"" . $row["id"] . "\">" . $row["type"] . "</option>";
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+            <button type="submit">Rezerwuję</button> 
         </form>
     </section>
 </main>

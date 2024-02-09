@@ -12,11 +12,35 @@
     <title>Admin panel</title>
 </head>
 <body>
-    <section>
-        <?php 
-            // Tutaj dodaj kod PHP, który generuje tabelę i umieść go tutaj
+<section>
+        <!-- Lista rozwijana jako filtr -->
+        <label for="filter">Filtruj pokój:</label>
+        <select id="filter">
+            <option value="">Wszystkie</option>
+            <?php
+            // Połączenie z bazą danych
             $mysqli = require __DIR__ . "/database.php";
-            $sql = "SELECT * FROM clients";
+            
+            // Zapytanie SQL dla listy rozwijanej
+            $sql = "SELECT DISTINCT type FROM rooms";
+            $result = $mysqli->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<option value=\"" . $row["type"] . "\">" . $row["type"] . "</option>";
+                }
+            }
+
+            $result->free();
+            $mysqli->close();
+            ?>
+        </select>
+        <?php 
+            // Połączenie z bazą danych
+            $mysqli = require __DIR__ . "/database.php";
+            
+            // Zapytanie SQL z dołączeniem tabeli rooms
+            $sql = "SELECT clients.*, rooms.type AS room_type FROM clients JOIN rooms ON clients.id_rooms = rooms.id";
             $result = $mysqli->query($sql);
 
             if ($result->num_rows > 0) {
@@ -26,6 +50,7 @@
                 <th scope='col'>Email</th>
                 <th scope='col'>Date</th>
                 <th scope='col'>Person Count</th>
+                <th scope='col'>Room Type</th>
                 <th scope='col'>Edycja</th>
                 </tr>";
 
@@ -36,6 +61,7 @@
                     echo "<td>" . $row["email"] . "</td>";
                     echo "<td>" . $row["date"] . "</td>";
                     echo "<td>" . $row["personCount"] . "</td>";
+                    echo "<td>" . $row["room_type"] . "</td>";
                     echo "<td>
                             <button class='update'><a href='update.php?updateid=$id'>Edytuj</a></button>
                             <button class='del'><a href='delete.php?deleteid=$id'>Usuń</a></button>
@@ -52,7 +78,27 @@
         ?>
     </section>
     <form action="POST">
-        <!-- Tutaj możesz dodać elementy formularza, jeśli są potrzebne -->
+        
     </form>
+
+    <script>
+        document.getElementById('filter').addEventListener('change', function() {
+            const filter = this.value;
+            const rows = document.querySelectorAll('table tr');
+
+            rows.forEach(function(row) {
+                const cell = row.querySelector('td:nth-child(5)'); // Pobierz piątą komórkę (Room Name)
+                
+                if (cell) {
+                    const text = cell.textContent;
+                    if (filter === '' || text === filter) {
+                        row.style.display = ''; // Wyświetl wiersz
+                    } else {
+                        row.style.display = 'none'; // Ukryj wiersz
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
