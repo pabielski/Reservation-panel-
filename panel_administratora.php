@@ -1,55 +1,8 @@
-<?php 
-$mysqli = require __DIR__ . "/database.php";
-
-// Zapytanie SQL do pobrania wszystkich danych z tabeli
-$sql = "SELECT * FROM clients";
-
-// Wykonanie zapytania
-$result = $mysqli->query($sql);
-
-
-// Sprawdzenie, czy istnieją dane w wyniku zapytania
-if ($result->num_rows > 0) {
-    echo "<table border='1'>
-    <tr>
-    <th>Client</th>
-    <th>Email</th>
-    <th>Date</th>
-    <th>Person Count</th>
-    <th>Edycja</th>
-    </tr>";
-
-    // Wyświetlanie danych w tabeli
-    while ($row = $result->fetch_assoc()) {
-        $id = $row["id"]; // Pobranie id z bazy danych
-        echo "<tr>";
-        echo "<td>" . $row["client"] . "</td>";
-        echo "<td>" . $row["email"] . "</td>";
-        echo "<td>" . $row["date"] . "</td>";
-        echo "<td>" . $row["personCount"] . "</td>";
-        echo "<td>
-                <button><a href='update.php?updateid=$id'>Edytuj</a></button>
-                <button><a href='delete.php?deleteid=$id'>Usuń</a></button>
-              </td>";
-        echo "</tr>";
-
-    }
-    echo "</table>";
-} else {
-    echo "Brak danych w tabeli.";
-}
-
-// Zwolnienie zasobów wyniku zapytania
-$result->free();
-
-// Zamknięcie połączenia z bazą danych
-$mysqli->close();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="table.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -59,8 +12,47 @@ $mysqli->close();
     <title>Admin panel</title>
 </head>
 <body>
-    <form action="POST">
+    <section>
+        <?php 
+            // Tutaj dodaj kod PHP, który generuje tabelę i umieść go tutaj
+            $mysqli = require __DIR__ . "/database.php";
+            $sql = "SELECT * FROM clients";
+            $result = $mysqli->query($sql);
 
+            if ($result->num_rows > 0) {
+                echo "<table border='1'>
+                <tr>
+                <th scope='col'>Client</th>
+                <th scope='col'>Email</th>
+                <th scope='col'>Date</th>
+                <th scope='col'>Person Count</th>
+                <th scope='col'>Edycja</th>
+                </tr>";
+
+                while ($row = $result->fetch_assoc()) {
+                    $id = $row["id"];
+                    echo "<tr>";
+                    echo "<td>" . $row["client"] . "</td>";
+                    echo "<td>" . $row["email"] . "</td>";
+                    echo "<td>" . $row["date"] . "</td>";
+                    echo "<td>" . $row["personCount"] . "</td>";
+                    echo "<td>
+                            <button class='update'><a href='update.php?updateid=$id'>Edytuj</a></button>
+                            <button class='del'><a href='delete.php?deleteid=$id'>Usuń</a></button>
+                          </td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+            } else {
+                echo "Brak danych w tabeli.";
+            }
+
+            $result->free();
+            $mysqli->close();
+        ?>
+    </section>
+    <form action="POST">
+        <!-- Tutaj możesz dodać elementy formularza, jeśli są potrzebne -->
     </form>
 </body>
 </html>

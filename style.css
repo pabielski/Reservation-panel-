@@ -62,7 +62,7 @@ color: white;
 flex:1;
 border: none;
 }
-.formularz button{ 
+button{ 
     background: skyblue; 
     border: none;
     outline: none;
@@ -72,7 +72,7 @@ border: none;
     cursor: pointer;
 }
 
-.formularz button:hover{
+ button:hover{
         background: transparent;
         color: skyblue;
 }

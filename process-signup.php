@@ -6,30 +6,30 @@ if (empty($_POST["name"]) || empty($_POST["email"]) || empty($_POST["date"]) || 
     die("Wszystkie pola formularza są wymagane");
 }
 
-if ( ! filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
     die("Wymagany jest prawidłowy adres email");
 }
-$sql = "INSERT INTO clients ( client, email, date, personCount) VALUES (?,?,?,?)";
+
+$sql = "INSERT INTO clients (client, email, date, personCount, id_rooms) VALUES (?, ?, ?, ?, ?)";
 
 $stmt = $mysqli->stmt_init();
-if ( ! $stmt->prepare($sql)) {
+if (!$stmt->prepare($sql)) {
     die("SQL error: " . $mysqli->error);
 }
 
-$stmt   ->bind_param("sssi", 
-$_POST["name"],
-$_POST["email"],
-$_POST["date"],
-$_POST["personCount"]);
-
-
+$stmt->bind_param("sssis", 
+    $_POST["name"],
+    $_POST["email"],
+    $_POST["date"],
+    $_POST["personCount"],
+    $_POST["room"]
+);
 
 try {
     if ($stmt->execute()) {
         echo "Twoja rezerwacja została utworzona";
-header("Location: res-created.html");
-exit;
-
+        header("Location: res-created.html");
+        exit;
     } else {
         echo "Nie udało się utworzyć rezerwacji";
     }

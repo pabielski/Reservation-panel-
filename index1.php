@@ -35,6 +35,22 @@
                 <label for="personCount"></label>
                 <input type="number" name="personCount" id="personCount" placeholder="1" />
             </div>
+            <div class="formularz">
+                <label for="room">Wybierz pokój:</label>
+                <select name="room" id="room">
+                    <?php
+                    $mysqli = require __DIR__ . "/database.php";
+                    $sql = "SELECT id, type FROM rooms";
+                    $result = $mysqli->query($sql);
+            
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value=\"" . $row["id"] . "\">" . $row["type"] . "</option>";
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
             <button type="submit">Rezerwuję</button> 
         </form>
     </section>

@@ -1,0 +1,72 @@
+* {
+    text-decoration: none;
+        transition:  0.2s ease-in-out;
+        text-align: center;
+}
+
+
+table{
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #4682B4;
+    width: 100%; /* Szerokość tabeli na 100% */
+}
+  th{
+    padding: 20px 15px;
+    
+    font-weight: 500;
+    font-size: 1rem;
+    color: #fff;
+    text-transform: uppercase;
+    background-color: #0a0f19;
+
+  }
+  td{
+    padding: 15px;
+    
+    vertical-align:middle;
+    font-weight: 300;
+    font-size: 0.8rem;
+    color: #fff; 
+  }
+  @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+  body{
+    min-height: 100vh;
+    background: #0f172a;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    font-family: 'Roboto', sans-serif;
+}
+
+  tr:nth-child(even) {
+    background-color: #19233b; /* Ustawienie koloru tła dla co drugiego wiersza */
+}
+
+button{  
+    border: none;
+    outline: none;
+    padding: 6px 17px;
+    font-family: roboto;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 0 0.4rem;
+}
+a{
+    color: inherit; 
+    text-decoration: none;
+}
+button.update{ 
+    background: skyblue; 
+}
+button.update:hover{ 
+    background: #77a9cc;
+}
+button.del{ 
+    background: #e57373;
+}
+button.del:hover{ 
+    background:  #cc7777; 
+}
