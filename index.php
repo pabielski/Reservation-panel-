@@ -19,10 +19,8 @@ session_start();
 <body>
     <h1>Moja rezerwacja</h1>
     <?php if (isset($_SESSION["user_id"])) {
-        // Jeśli użytkownik jest zalogowany, pobierz jego dane z bazy danych i wyświetl
         $mysqli = require __DIR__ . "/database.php";
         
-        // Pobierz dane użytkownika z bazy danych na podstawie jego ID sesji
         $user_id = $_SESSION["user_id"];
         $sql = "SELECT * FROM clients WHERE id = ?";
         $stmt = $mysqli->prepare($sql);
@@ -31,7 +29,6 @@ session_start();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
 
-        // Wyświetl dane użytkownika
         echo "Twoje dane to:" . "<br>";
         echo "Imię: " . $user['client'] . "<br>";
         echo "Email: " . $user['email'] . "<br>";
